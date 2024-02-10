@@ -11,7 +11,7 @@ private:
 	static const char* const s_typeName;
 	static const char* const s_verticesName;
 	static const char* const s_shapeName;
-	static const size_t numOfVertices = 3;
-	Point2D m_vertices[numOfVertices] = { 0 };
+	static const size_t m_numOfVertices = 3;
+	Point2D m_vertices[m_numOfVertices] = { 0 };
 
 };

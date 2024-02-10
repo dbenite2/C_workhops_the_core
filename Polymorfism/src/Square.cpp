@@ -20,17 +20,15 @@ std::string Square::toJSON() const {
 	builder.writeCString(s_typeName, s_shapeName, true);
 	builder.startArray(s_verticesName);
 
-	Point2D vertices[4] = {
+	Point2D vertices[m_numOfVertices] = {
 		m_lowerLeftVertex,
 		{m_lowerLeftVertex.x + m_sideLenght, m_lowerLeftVertex.y},
 		{m_lowerLeftVertex.x + m_sideLenght, m_lowerLeftVertex.y + m_sideLenght},
 		{m_lowerLeftVertex.x, m_lowerLeftVertex.y + m_sideLenght}
 	};
 
-	for (int i = 0; i < 4; i++) {
-		std::stringstream vertex;
-		vertex << "[" << vertices[i].x << ", " << vertices[i].y << "]";
-		builder.addArrayElement(vertex.str(), i == 0, i < 3);
+	for (size_t i = 0; i < m_numOfVertices; i++) {
+		builder.addArrayElement(vertices[i].x, vertices[i].y, i, i < m_numOfVertices - 1);
 	}
 	builder.endArray(true);
 	builder.writeDouble(s_areaName, area(), false);

@@ -19,9 +19,9 @@ std::string Circle::toJSON() const {
 	builder.startObject();
 	builder.writeInt(s_idName, m_id, true);
 	builder.writeCString(s_typeName, s_shapeName, true);
-	std::stringstream center;
-	center << "[" << m_center.x << ", " << m_center.y << "]";
-	builder.writeCString(s_verticesName, center.str().c_str(), true);
+	builder.startArray(s_verticesName);
+	builder.addArrayElement(m_center.x, m_center.y, 0, false);
+	builder.endArray(true);
 	builder.writeDouble(s_areaName, area(), false);
 	builder.endObject();
 

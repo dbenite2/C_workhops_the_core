@@ -8,7 +8,8 @@ const char* const JSONBuilder::ARRAY_END_CHARACTER{ "]" };
 const char* const JSONBuilder::TAB_CHARACTER{ "\t" };
 const char* const JSONBuilder::NEW_LINE_CHARACTER{ "\n" };
 const char* const JSONBuilder::SEPERATOR_CHARACTER{ " : " };
-const char* const JSONBuilder::NEW_PAIR_CHARACTER{ "," };
+const char* const JSONBuilder::COMMA_CHARACTER{ "," };
+const char* const JSONBuilder::SPACED_COMMA_CHARACTER{ ", " };
 const char* const JSONBuilder::QUOTE_CHARACTER{ "\"" };
 
 JSONBuilder::JSONBuilder() : m_indent(" ") {}
@@ -24,36 +25,38 @@ void JSONBuilder::endObject() {
 }
 
 void JSONBuilder::writeIdentation() {
-	m_ss << m_indent;
+	for (size_t i = 0; i < indentLevel; i++) {
+		m_ss << TAB_CHARACTER;
+	}
 }
 
 void JSONBuilder::increaseIndent() {
-	m_indent += " ";
+	indentLevel++;
 }
 
 void JSONBuilder::decreaseIndent() {
-	if (m_indent.size() > 2) m_indent.pop_back();
-	m_indent.pop_back();
+	if (indentLevel < 0) return;
+	indentLevel--;
 }
 
 void JSONBuilder::writeCString(const char* key, const char* value, bool hasNext) {
 	writeIdentation();
 	m_ss << QUOTE_CHARACTER << key << QUOTE_CHARACTER <<  SEPERATOR_CHARACTER << QUOTE_CHARACTER << value << QUOTE_CHARACTER;
-	if (hasNext) m_ss << NEW_PAIR_CHARACTER;
+	if (hasNext) m_ss << COMMA_CHARACTER;
 	m_ss << NEW_LINE_CHARACTER;
 }
 
 void JSONBuilder::writeInt(const char* key, const uint64_t& value, bool hasNext) {
 	writeIdentation();
-	m_ss << QUOTE_CHARACTER << key << QUOTE_CHARACTER << SEPERATOR_CHARACTER << std::to_string(value).c_str();
-	if (hasNext) m_ss << NEW_PAIR_CHARACTER;
+	m_ss << QUOTE_CHARACTER << key << QUOTE_CHARACTER << SEPERATOR_CHARACTER << value;
+	if (hasNext) m_ss << COMMA_CHARACTER;
 	m_ss << NEW_LINE_CHARACTER;
 }
 
 void JSONBuilder::writeDouble(const char* key, const double& value, bool hasNext) {
 	writeIdentation();
-	m_ss << QUOTE_CHARACTER << key << QUOTE_CHARACTER << SEPERATOR_CHARACTER << std::to_string(value).c_str();
-	if (hasNext) m_ss << NEW_PAIR_CHARACTER;
+	m_ss << QUOTE_CHARACTER << key << QUOTE_CHARACTER << SEPERATOR_CHARACTER << value;
+	if (hasNext) m_ss << COMMA_CHARACTER;
 	m_ss << NEW_LINE_CHARACTER;
 }
 
@@ -64,15 +67,15 @@ void JSONBuilder::startArray(const char* key) {
 
 void JSONBuilder::endArray(bool hasNext) {
 	m_ss << ARRAY_END_CHARACTER;
-	if (hasNext) m_ss << NEW_PAIR_CHARACTER;
+	if (hasNext) m_ss << COMMA_CHARACTER;
 	m_ss << NEW_LINE_CHARACTER;
 }
 
-void JSONBuilder::addArrayElement(const std::string& value,bool firstElement, bool hasNext) {
-	if (!firstElement) writeIdentation();
-	m_ss << value;
-	if (hasNext) m_ss << NEW_PAIR_CHARACTER;
-	if (firstElement) m_ss << NEW_LINE_CHARACTER;
+void JSONBuilder::addArrayElement(const double& valueX, const double& valueY, const size_t& index, bool hasNext) {
+	if (index != 0 && index % 2 != 0) writeIdentation();
+	m_ss << ARRAY_START_CHARACTER << valueX << SPACED_COMMA_CHARACTER << valueY << ARRAY_END_CHARACTER;
+	if (hasNext) m_ss << SPACED_COMMA_CHARACTER;
+	if ((index == 0 || index % 2 == 0) && hasNext) m_ss << NEW_LINE_CHARACTER;
 }
 
 std::string JSONBuilder::build() {

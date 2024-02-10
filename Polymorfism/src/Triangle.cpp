@@ -23,10 +23,8 @@ std::string Triangle::toJSON() const {
 	builder.writeInt(s_idName, m_id, true);
 	builder.writeCString(s_typeName, s_shapeName, true);
 	builder.startArray(s_verticesName);
-	for (int i = 0; i < 3; i++) {
-		std::stringstream vertex;
-		vertex << "[" << m_vertices[i].x << ", " << m_vertices[i].y << "]";
-		builder.addArrayElement(vertex.str(),i == 0, i < 2);
+	for (size_t i = 0; i < m_numOfVertices; i++) {
+		builder.addArrayElement(m_vertices[i].x,m_vertices[i].y, i, i < m_numOfVertices - 1);
 	}
 	builder.endArray(true);
 	builder.writeDouble(s_areaName, area(), false);

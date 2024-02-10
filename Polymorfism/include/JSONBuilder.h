@@ -15,7 +15,7 @@ public:
 	void writeDouble(const char* key, const double& value, bool hasNext);
 	void startArray(const char* key);
 	void endArray(bool hasNext);
-	void addArrayElement(const std::string& value, bool firstElement, bool hasNext);
+	void addArrayElement(const double& valueX, const double& valueY,const size_t& index, bool hasNext);
 	std::string build();
 private:
 
@@ -29,7 +29,8 @@ private:
 	static const char* const TAB_CHARACTER;
 	static const char* const NEW_LINE_CHARACTER;
 	static const char* const SEPERATOR_CHARACTER;
-	static const char* const NEW_PAIR_CHARACTER;
+	static const char* const COMMA_CHARACTER;
+	static const char* const SPACED_COMMA_CHARACTER;
 	static const char* const QUOTE_CHARACTER;
 	size_t indentLevel{ 0 };
 
