@@ -1,0 +1,3 @@
+C:/Users/flio0/Documents/c++/Projects/MyStringDavidBenitez/build/CMakeFiles/MyString_Class.dir
+C:/Users/flio0/Documents/c++/Projects/MyStringDavidBenitez/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/flio0/Documents/c++/Projects/MyStringDavidBenitez/build/CMakeFiles/ZERO_CHECK.dir

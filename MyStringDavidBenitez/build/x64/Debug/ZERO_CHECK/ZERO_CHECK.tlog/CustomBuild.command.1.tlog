@@ -1,0 +1,10 @@
+^C:\USERS\FLIO0\DOCUMENTS\C++\PROJECTS\MYSTRINGDAVIDBENITEZ\BUILD\CMAKEFILES\1ECE3FA8C528E798F304A907CD6BC8B5\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/flio0/Documents/c++/Projects/MyStringDavidBenitez -BC:/Users/flio0/Documents/c++/Projects/MyStringDavidBenitez/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/flio0/Documents/c++/Projects/MyStringDavidBenitez/build/MyString_Class.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
